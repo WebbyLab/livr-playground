@@ -1,0 +1,23 @@
+{
+  "name": "Apixaban model",
+  "version": "1.0.0",
+  "authors": [
+    "webbylab <admin@webbylab.com>"
+  ],
+  "description": "Apixaban Model",
+  "main": "public/js/app/app.js",
+  "license": "WebbyLab",
+  "homepage": "http://webbylab.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/js/bower_components"
+  ],
+  "dependencies": {
+    "highcharts": "*",
+    "animate.css": "*",
+    "jquery": "*",
+    "bxslider-4": "*"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "reactjs-modern-boilerplate",
+  "version": "0.0.1",
+  "description": "ReactJS Modern Boilerplate",
+  "author": {
+    "name": "WebbyLab",
+    "email": "office@webbylab.com",
+    "url": "http://webbylab.com"
+  },
+  "private": true,
+  "scripts": {
+    "build": "webpack -p",
+    "start": "webpack -d --watch --colors",
+    "devserver": "webpack-dev-server --debug --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090"
+  },
+  "dependencies": {
+    "jquery": "*",
+    "livr": "0.0.3",
+    "react-classset": "*",
+    "react": "^0.11.1",
+    "react-bootstrap": "^0.11.1"
+  },
+  "devDependencies": {
+    "css-loader": "*",
+    "jshint-loader": "*",
+    "json-loader": "*",
+    "jsx-loader": "^0.11",
+    "less-loader": "*",
+    "react-hot-loader": "*",
+    "style-loader": "*",
+    "traceur-loader": "*",
+    "url-loader": "*",
+    "webpack": "*",
+    "webpack-dev-server": "*"
+  }
+}

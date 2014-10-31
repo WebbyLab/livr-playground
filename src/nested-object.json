@@ -1,0 +1,18 @@
+{
+    "rules": {
+        "name": "required",
+        "phone": {"max_length": 10},
+        "address": { "nested_object": {
+            "city": "required",
+            "zip": ["required", "positive_integer"]
+        }}
+    },
+    "data": {
+        "name": "aaaa",
+        "phone": "+823832",
+        "address": {
+            "city": "Kyiv",
+            "zip": 1232
+        }
+    }
+}
