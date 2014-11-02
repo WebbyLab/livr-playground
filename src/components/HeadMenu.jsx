@@ -21,8 +21,9 @@ let HeadMenu = React.createClass({
         };
     },
 
-    handlePresetClick(preset) {
+    handlePresetClick(preset, event) {
         this.props.onPresetClick(preset);
+        event.preventDefault();
     },
 
     renderPresetsItems() {

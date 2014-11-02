@@ -7,10 +7,10 @@ let React = require('react/addons');
 let cx    = React.addons.classSet;
 
 let Well  = require('react-bootstrap/Well');
+let jsonUtils = require('../jsonUtils');
 
 require('./Output.less');
 
-let stringifyJSON = data => JSON.stringify(data, null, '    ');
 
 let Output = React.createClass({
 
@@ -26,7 +26,7 @@ let Output = React.createClass({
         return (
             <Well className={outputClasses}>
                 <pre>
-                    { stringifyJSON(output.result ? output.result : output.errors) }
+                    { jsonUtils.stringify(output.result ? output.result : output.errors) }
                 </pre>
             </Well>
         );

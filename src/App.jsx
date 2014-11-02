@@ -12,39 +12,31 @@ let Col    = require('react-bootstrap/Col');
 let Editor   = require('./components/Editor.jsx');
 let Output   = require('./components/Output.jsx');
 let HeadMenu = require('./components/HeadMenu.jsx');
+let Footer   = require('./components/Footer.jsx');
+
+let LIVR = require('livr');
+let jsonUtils =  require('./jsonUtils');
 
 require('./App.less');
 
-let LIVR = require('livr');
-LIVR.Validator.defaultAutoTrim(true);
-
 let presets = require('./presets/');
+LIVR.Validator.defaultAutoTrim(true);
 
 let App = React.createClass({
     getInitialState() {
-        let url = window.location.hash.slice(1, window.location.hash.length);
-
-        let rules;
-        let data;
-        url.replace(/"rules":(\{.*?\}).*"data":(\{.*?\})/, (subsrt, group1, group2) => {
-            rules = group1;
-            data = group2;
-        });
+        let parsed = this.parseURL();
 
         return {
-            output: this.validate({
-                rules: rules,
-                data: data
-            }),
-            rules: rules,
-            data: data
+            rules: parsed.rules,
+            data: parsed.data
         };
     },
 
-    validate({rules, data}) {
+    validate() {
         try {
-            rules = JSON.parse(rules);
-            data = JSON.parse(data);
+            let rules = jsonUtils.parse(this.state.rules);
+            let data = jsonUtils.parse(this.state.data);
+
             let validator = new LIVR.Validator(rules);
             let result = validator.validate(data);
 
@@ -57,35 +49,41 @@ let App = React.createClass({
         }
     },
 
-    handleIEditorChange({data, rules}) {
-        try {
-            rules = rules || this.state.rules;
-            data = data || this.state.data;
-            this.setState({
-                data: data,
-                rules: rules,
-                output: this.validate({rules, data})
-            });
+    handleIEditorChange(type, text) {
+        this.state[type] = text;
+        this.setState(this.state);
 
-            window.location.hash = JSON.stringify({
-                rules: JSON.parse(rules),
-                data: JSON.parse(data)
-            });
-        } catch(e) {
-            this.setState({
-                data: data,
-                output: {
-                    errors: e.message
-                }
-            });
-        }
+        this.updateURL();
     },
 
     handlePresetSelect(preset) {
-        this.handleIEditorChange({
-            rules: JSON.stringify(preset.rules, null, '   '),
-            data: JSON.stringify(preset.data, null, '   '),
+        this.setState({
+            rules: preset.rules,
+            data: preset.data,
         });
+
+        this.updateURL();
+    },
+
+    updateURL() {
+        window.location.hash = encodeURIComponent(JSON.stringify({
+            rules: this.state.rules,
+            data: this.state.data
+        }));
+    },
+
+    parseURL() {
+        try {
+            let decoded = decodeURIComponent(window.location.hash);
+            decoded = decoded.replace(/^#/, '');
+            return jsonUtils.parse( decoded );
+        } catch(e) {
+            console.error(e);
+            return {
+                rules: '{}',
+                data: '{}'
+            };
+        }
     },
 
     render() {
@@ -96,18 +94,20 @@ let App = React.createClass({
                 <Col xs={6}>
                     <Editor label='LIVR Rules'
                             value={this.state.rules}
-                            type='rules'
-                            onChange={this.handleIEditorChange} />
+                            onChange={this.handleIEditorChange.bind(this, 'rules')} />
                 </Col>
+
                  <Col xs={6}>
-                    <Editor label='LIVR Rules'
+                    <Editor label='Data for validation'
                             value={this.state.data}
                             type='data'
-                            onChange={this.handleIEditorChange} />
+                            onChange={this.handleIEditorChange.bind(this, 'data')} />
                 </Col>
             </Row>
 
-            <Output value={this.state.output}/>
+            <Output value={ this.validate() }/>
+
+            <Footer />
         </div>;
     }
 });

@@ -19,7 +19,8 @@
     "json-format": "0.0.1",
     "livr": "0.0.3",
     "react": "^0.11.1",
-    "react-bootstrap": "^0.11.1"
+    "react-bootstrap": "^0.11.1",
+    "relaxed-json": "^0.2.8"
   },
   "devDependencies": {
     "css-loader": "*",
@@ -27,6 +28,7 @@
     "json-loader": "*",
     "jsx-loader": "^0.11",
     "less-loader": "*",
+    "raw-loader": "^0.5.1",
     "react-hot-loader": "*",
     "style-loader": "*",
     "traceur-loader": "*",

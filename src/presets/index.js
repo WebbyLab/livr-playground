@@ -1,9 +1,19 @@
 'use strict';
 
-module.exports = [{
-    id: 'Simple registration data',
-    payload: require('./simple-registration-data.json')
-}, {
-    id: 'Simple validation of nested object',
-    payload: require('./nested-object.json')
-}];
+module.exports = [
+    {
+        id: 'Registration form',
+        payload: {
+            rules: require("raw!./registration-form/rules.raw"),
+            data: require("raw!./registration-form/input.raw")
+        }
+    },
+
+    {
+        id: 'Validation of nested object',
+        payload: {
+            rules: require("raw!./nested-object/rules.raw"),
+            data: require("raw!./nested-object/input.raw")
+        }
+    }
+];

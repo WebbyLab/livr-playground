@@ -6,20 +6,13 @@
 
 let React = require('react');
 let Input = require('react-bootstrap/Input');
+
 require('./Editor.less');
 
 let Editor = React.createClass({
     handleChange() {
-        let value = this.refs.input.getValue();
-
-        this.setState({
-            value: this.refs.input.getValue()
-        });
-
         if (this.props.onChange) {
-            this.props.onChange({
-                [this.props.type]: value
-            });
+            this.props.onChange( this.refs.input.getValue() );
         }
     },
 
