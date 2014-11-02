@@ -36,20 +36,23 @@ let HeadMenu = React.createClass({
 
     render() {
         return (
-              <Navbar className='HeadMenu'>
+            <Navbar className='HeadMenu'>
                 <Nav>
-                  <NavItem key={1} className='sitename'> LIVR PLAYGROUND</NavItem>
+                    <NavItem key={1} className='sitename'>
+                        LIVR PLAYGROUND
+                    </NavItem>
 
-                  <DropdownButton key={4} title="Examples">
+                    <DropdownButton key={4} title="Examples">
                         {this.renderPresetsItems()}
-                  </DropdownButton>
+                    </DropdownButton>
 
-                  <NavItem key={2} href="http://livr-spec.org/" target="_blank">livr-spec.org</NavItem>
+                    <NavItem key={2} href="http://livr-spec.org/" target="_blank">
+                        livr-spec.org
+                    </NavItem>
                 </Nav>
-              </Navbar>
-            );
-        }
-
+            </Navbar>
+        );
+    }
 });
 
 module.exports = HeadMenu;
