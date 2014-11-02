@@ -3,25 +3,32 @@
  */
 'use strict';
 
-var React = require('react');
-var Well = require('react-bootstrap').Well;
-var cx = require('react-classset');
+let React = require('react/addons');
+let cx    = React.addons.classSet;
+
+let Well  = require('react-bootstrap/Well');
 
 require('./Output.less');
 
-var Output = React.createClass({
+let stringifyJSON = data => JSON.stringify(data, null, '    ');
+
+let Output = React.createClass({
 
     render() {
-        var output = this.props.value;
+        let output = this.props.value;
 
-        var outputClasses = cx({
+        let outputClasses = cx({
             "Output": true,
-            "col-md-12": true,
             valid: output.result,
             error: output.errors
         });
+
         return (
-            <Well className={outputClasses}>{output.result ? JSON.stringify(output.result) : JSON.stringify(output.errors)}</Well>
+            <Well className={outputClasses}>
+                <pre>
+                    { stringifyJSON(output.result ? output.result : output.errors) }
+                </pre>
+            </Well>
         );
     }
 

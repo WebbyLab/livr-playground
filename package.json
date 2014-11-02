@@ -1,7 +1,7 @@
 {
-  "name": "reactjs-modern-boilerplate",
+  "name": "LIVR-Playground",
   "version": "0.0.1",
-  "description": "ReactJS Modern Boilerplate",
+  "description": "LIVR Playground",
   "author": {
     "name": "WebbyLab",
     "email": "office@webbylab.com",
@@ -14,9 +14,10 @@
     "devserver": "webpack-dev-server --debug --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090"
   },
   "dependencies": {
-    "jquery": "*",
+    "bootstrap": "^3.3.0",
+    "bootswatch": "^3.2.0",
+    "json-format": "0.0.1",
     "livr": "0.0.3",
-    "react-classset": "*",
     "react": "^0.11.1",
     "react-bootstrap": "^0.11.1"
   },

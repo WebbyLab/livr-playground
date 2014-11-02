@@ -4,21 +4,28 @@
 
 'use strict';
 
-var React      = require('react');
-var Input      = require('./components/Input.jsx');
-var Output     = require('./components/Output.jsx');
-var Navbar     = require('./components/NavBar.jsx');
-var LIVR       = require('livr');
+let React  = require('react');
+
+let Row    = require('react-bootstrap/Row');
+let Col    = require('react-bootstrap/Col');
+
+let Editor   = require('./components/Editor.jsx');
+let Output   = require('./components/Output.jsx');
+let HeadMenu = require('./components/HeadMenu.jsx');
+
 require('./App.less');
 
+let LIVR = require('livr');
 LIVR.Validator.defaultAutoTrim(true);
 
-var App = React.createClass({
+let presets = require('./presets/');
 
+let App = React.createClass({
     getInitialState() {
-        var url = window.location.hash.slice(1, window.location.hash.length);
-        var rules;
-        var data;
+        let url = window.location.hash.slice(1, window.location.hash.length);
+
+        let rules;
+        let data;
         url.replace(/"rules":(\{.*?\}).*"data":(\{.*?\})/, (subsrt, group1, group2) => {
             rules = group1;
             data = group2;
@@ -38,8 +45,8 @@ var App = React.createClass({
         try {
             rules = JSON.parse(rules);
             data = JSON.parse(data);
-            var validator = new LIVR.Validator(rules);
-            var result = validator.validate(data);
+            let validator = new LIVR.Validator(rules);
+            let result = validator.validate(data);
 
             return {
                 result: result,
@@ -50,7 +57,7 @@ var App = React.createClass({
         }
     },
 
-    handleInputsChange({data, rules}) {
+    handleIEditorChange({data, rules}) {
         try {
             rules = rules || this.state.rules;
             data = data || this.state.data;
@@ -59,6 +66,7 @@ var App = React.createClass({
                 rules: rules,
                 output: this.validate({rules, data})
             });
+
             window.location.hash = JSON.stringify({
                 rules: JSON.parse(rules),
                 data: JSON.parse(data)
@@ -73,18 +81,32 @@ var App = React.createClass({
         }
     },
 
-    handlePresetClick(preset) {
-        this.handleInputsChange({
-            rules: JSON.stringify(preset.rules),
-            data: JSON.stringify(preset.data),
+    handlePresetSelect(preset) {
+        this.handleIEditorChange({
+            rules: JSON.stringify(preset.rules, null, '   '),
+            data: JSON.stringify(preset.data, null, '   '),
         });
     },
 
     render() {
-        return <div className="App">
-            <Navbar onPresetClick={this.handlePresetClick}/>
-            <Input value={this.state.rules} label="Rules" type="rules" onChange={this.handleInputsChange}/>
-            <Input value={this.state.data} label="Input data" type="data" onChange={this.handleInputsChange}/>
+        return <div className="App container">
+            <HeadMenu presets={presets} onPresetClick={this.handlePresetSelect}/>
+
+            <Row>
+                <Col xs={6}>
+                    <Editor label='LIVR Rules'
+                            value={this.state.rules}
+                            type='rules'
+                            onChange={this.handleIEditorChange} />
+                </Col>
+                 <Col xs={6}>
+                    <Editor label='LIVR Rules'
+                            value={this.state.data}
+                            type='data'
+                            onChange={this.handleIEditorChange} />
+                </Col>
+            </Row>
+
             <Output value={this.state.output}/>
         </div>;
     }
