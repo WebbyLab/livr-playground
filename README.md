@@ -1,7 +1,9 @@
 LIVR Playground
 ---------------
 
-See http://livr-spec.org for details.
+You can play with it here http://webbylab.github.io/livr-playground 
+
+See http://livr-spec.org for spec details.
 
 ## RUN DEVELOPMENT VERSION
 
