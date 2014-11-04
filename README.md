@@ -1,12 +1,17 @@
-RUN DEVELOPMENT VERSION
+LIVR Playground
+---------------
+
+See http://livr-spec.org for details.
+
+## RUN DEVELOPMENT VERSION
+
 1. npm install
-2. bower install
-3. npm start
-4. open http://localhost:8080 in browser
+2. npm run devserver
+3. open http://localhost:8090 in browser
 
 
-BUILD PRODUCTION VERSION
+## BUILD PRODUCTION VERSION
+
 1. npm install
-2. bower install
-3. nmp run build
-4. folder "public" contains production version. Just open public/index.html in browser.
+2. npm run build
+3. folder "public" contains production version. Just open public/index.html in browser.
