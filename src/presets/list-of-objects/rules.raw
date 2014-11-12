@@ -1,0 +1,7 @@
+{
+    order_id: ['required', 'positive_integer'],
+    products: [ 'not_empty_list', { 'list_of_objects': {
+        product_id: ['required','positive_integer'],
+        quantity: ['required', 'positive_integer']
+    }}]
+}
