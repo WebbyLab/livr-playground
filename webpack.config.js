@@ -14,7 +14,7 @@ module.exports = {
             { test: /\.jpg$/, loader: "url-loader?limit=10000&mimetype=image/jpg" },
             { test: /\.png$/, loader: "url-loader?limit=10000&mimetype=image/png" },
             { test: /\.svg$/, loader: "url-loader?limit=26000&mimetype=image/svg+xml" },
-            { test: /\.(woff|ttf|eot)$/, loader: "url-loader" },
+            { test: /\.(woff2?|ttf|eot)$/, loader: "url-loader" },
 
             { test: /\.jsx$/, loader: "traceur?sourceMaps=true&runtime=true!jshint-loader!jsx-loader", exclude: [/node_modules/, /public/] },
             { test: /\.js$/, loader: "traceur?sourceMaps=true&runtime=true!jshint-loader", exclude: [/node_modules/, /public/] },
