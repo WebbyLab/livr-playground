@@ -1,17 +1,13 @@
-/**
- * @jsx React.DOM
- */
-
 'use strict';
 
-let React = require('react');
+import React from 'react';
 
-let Col = require('react-bootstrap/Col');
-let Row = require('react-bootstrap/Row');
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 
-require('./Footer.less');
+import './Footer.less';
 
-let Footer = React.createClass({
+const Footer = React.createClass({
     render() {
         return (
             <Row className='Footer'>
@@ -26,4 +22,4 @@ let Footer = React.createClass({
     }
 });
 
-module.exports = Footer;
+export default Footer;

@@ -1,30 +1,26 @@
-/**
- * @jsx React.DOM
- */
-
 'use strict';
 
-let React  = require('react');
+import React    from 'react';
 
-let Row    = require('react-bootstrap/Row');
-let Col    = require('react-bootstrap/Col');
+import Row      from 'react-bootstrap/lib/Row';
+import Col      from 'react-bootstrap/lib/Col';
 
-let Editor   = require('./components/Editor.jsx');
-let Output   = require('./components/Output.jsx');
-let HeadMenu = require('./components/HeadMenu.jsx');
-let Footer   = require('./components/Footer.jsx');
+import Editor   from './components/Editor.jsx';
+import Output   from './components/Output.jsx';
+import HeadMenu from './components/HeadMenu.jsx';
+import Footer   from './components/Footer.jsx';
 
-let LIVR = require('livr');
-let jsonUtils =  require('./jsonUtils');
+import LIVR      from 'livr';
+import jsonUtils from './jsonUtils';
 
-require('./App.less');
+import './App.less';
+import presets from './presets/';
 
-let presets = require('./presets/');
 LIVR.Validator.defaultAutoTrim(true);
 
-let App = React.createClass({
+const App = React.createClass({
     getInitialState() {
-        let parsed = this.parseURL();
+        const parsed = this.parseURL();
 
         return {
             rules: parsed.rules,
@@ -34,14 +30,14 @@ let App = React.createClass({
 
     validate() {
         try {
-            let rules = jsonUtils.parse(this.state.rules);
-            let data = jsonUtils.parse(this.state.data);
+            const rules = jsonUtils.parse(this.state.rules);
+            const data = jsonUtils.parse(this.state.data);
 
-            let validator = new LIVR.Validator(rules);
-            let result = validator.validate(data);
+            const validator = new LIVR.Validator(rules);
+            const result = validator.validate(data);
 
             return {
-                result: result,
+                result,
                 errors : validator.getErrors()
             };
         } catch(e) {
@@ -59,7 +55,7 @@ let App = React.createClass({
     handlePresetSelect(preset) {
         this.setState({
             rules: preset.rules,
-            data: preset.data,
+            data: preset.data
         });
 
         this.updateURL();
@@ -112,4 +108,4 @@ let App = React.createClass({
     }
 });
 
-module.exports = App;
+export default App;

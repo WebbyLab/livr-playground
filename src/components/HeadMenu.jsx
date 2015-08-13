@@ -1,20 +1,16 @@
-/**
- * @jsx React.DOM
- */
-
 'use strict';
 
-let React          = require('react');
+import React          from 'react';
 
-let NavItem        = require('react-bootstrap/NavItem');
-let Navbar         = require('react-bootstrap/Navbar');
-let Nav            = require('react-bootstrap/Nav');
-let DropdownButton = require('react-bootstrap/DropdownButton');
-let MenuItem       = require('react-bootstrap/MenuItem');
+import NavItem        from 'react-bootstrap/lib/NavItem';
+import Navbar         from 'react-bootstrap/lib/Navbar';
+import Nav            from 'react-bootstrap/lib/Nav';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import MenuItem       from 'react-bootstrap/lib/MenuItem';
 
-require('./HeadMenu.less');
+import './HeadMenu.less';
 
-let HeadMenu = React.createClass({
+const HeadMenu = React.createClass({
     getDefaultProps() {
         return {
             presets: []
@@ -49,10 +45,14 @@ let HeadMenu = React.createClass({
                     <NavItem key={2} href="http://livr-spec.org/" target="_blank">
                         livr-spec.org
                     </NavItem>
+
+                    <NavItem key={5} href="https://github.com/WebbyLab/livr-playground" target="_blank">
+                        github
+                    </NavItem>
                 </Nav>
             </Navbar>
         );
     }
 });
 
-module.exports = HeadMenu;
+export default HeadMenu;

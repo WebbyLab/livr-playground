@@ -16,43 +16,14 @@ module.exports = {
             { test: /\.svg$/, loader: "url-loader?limit=26000&mimetype=image/svg+xml" },
             { test: /\.(woff2?|ttf|eot)$/, loader: "url-loader" },
 
-            { test: /\.jsx$/, loader: "traceur?sourceMaps=true&runtime=true!jshint-loader!jsx-loader", exclude: [/node_modules/, /public/] },
-            { test: /\.js$/, loader: "traceur?sourceMaps=true&runtime=true!jshint-loader", exclude: [/node_modules/, /public/] },
+            { test: /\.jsx$/, loader: "react-hot!babel!eslint-loader", exclude: [/node_modules/, /public/] },
+            { test: /\.js$/, loader: "babel!eslint-loader", exclude: [/node_modules/, /public/] },
+
 
             { test: /\.json$/, loader: "json-loader"}
         ]
     },
-    jshint: {
-        // Env
-        "browser": true,
-        "node": true,
-        "jquery": true,
-
-        // Restrictions
-        "bitwise": true,
-        "newcap": false,
-        "noempty": true,
-        "esnext": true,
-        "globalstrict": true,
-        "freeze": true,
-        "undef": true,
-        "unused": true,
-        "maxcomplexity": 25,
-        "latedef": true,
-        "smarttabs": false,
-        "trailing": false,
-        "laxbreak": true,
-
-        // Style
-        "maxparams": 4,
-
-        // Loder options
-        "emitErrors": false,
-        "failOnHint": false,
-
-        "globals": {
-            "$": true,
-            "Promise": true
-        }
+    eslint: {
+        configFile: '.eslintrc'
     }
 };

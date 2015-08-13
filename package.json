@@ -9,28 +9,30 @@
   },
   "private": true,
   "scripts": {
+    "lint": "eslint src",
     "build": "webpack -p",
-    "start": "webpack -d --watch --colors",
-    "devserver": "webpack-dev-server --debug --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090"
+    "devserver": "webpack-dev-server --debug --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090",
+    "test": "npm run lint"
   },
   "dependencies": {
-    "bootstrap": "^3.3.0",
-    "bootswatch": "^3.2.0",
-    "livr": "0.0.7",
-    "react": "^0.11.1",
-    "react-bootstrap": "^0.11.1",
+    "livr": "0.0.8",
+    "react": "^0.13.3",
+    "react-bootstrap": "^0.24.4",
     "relaxed-json": "^0.2.8"
   },
   "devDependencies": {
+    "autoprefixer-loader": "*",
+    "babel-loader": "*",
     "css-loader": "*",
-    "jshint-loader": "*",
+    "eslint": "^1.1.0",
+    "eslint-loader": "^1.0.0",
+    "eslint-plugin-react": "^3.2.1",
+    "file-loader": "^0.8.4",
     "json-loader": "*",
-    "jsx-loader": "^0.11",
     "less-loader": "*",
     "raw-loader": "^0.5.1",
     "react-hot-loader": "*",
     "style-loader": "*",
-    "traceur-loader": "*",
     "url-loader": "*",
     "webpack": "*",
     "webpack-dev-server": "*"

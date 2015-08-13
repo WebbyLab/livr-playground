@@ -1,7 +1,9 @@
 'use strict';
-require('./assets');
+import './assets';
 
-var React = window.React = require('react');
-var App   = require('./App.jsx');
+import React from 'react';
+import App   from './App.jsx';
 
-React.renderComponent( App(), document.getElementById('content') );
+window.React = React;
+
+React.render( React.createElement(App), document.getElementById('content') );

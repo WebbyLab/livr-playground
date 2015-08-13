@@ -1,24 +1,20 @@
-/**
- * @jsx React.DOM
- */
 'use strict';
 
-let React = require('react/addons');
-let cx    = React.addons.classSet;
+import React from 'react/addons';
+const cx    = React.addons.classSet;
 
-let Well  = require('react-bootstrap/Well');
-let jsonUtils = require('../jsonUtils');
+import Well  from 'react-bootstrap/lib/Well';
+import jsonUtils from '../jsonUtils';
 
-require('./Output.less');
+import './Output.less';
 
 
-let Output = React.createClass({
-
+const Output = React.createClass({
     render() {
-        let output = this.props.value;
+        const output = this.props.value;
 
-        let outputClasses = cx({
-            "Output": true,
+        const outputClasses = cx({
+            Output: true,
             valid: output.result,
             error: output.errors
         });
@@ -34,4 +30,4 @@ let Output = React.createClass({
 
 });
 
-module.exports = Output;
+export default Output;

@@ -1,5 +1,5 @@
-require('./css/normalize.css');
+import './css/normalize.css';
 
 // External assets
-require('bootstrap/dist/css/bootstrap.css');
-require('bootswatch/darkly/bootstrap.css');
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootswatch/darkly/bootstrap.css';

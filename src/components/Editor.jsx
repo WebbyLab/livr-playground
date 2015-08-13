@@ -1,15 +1,11 @@
-/**
- * @jsx React.DOM
- */
-
 'use strict';
 
-let React = require('react');
-let Input = require('react-bootstrap/Input');
+import React from 'react';
+import Input from 'react-bootstrap/lib/Input';
 
-require('./Editor.less');
+import './Editor.less';
 
-let Editor = React.createClass({
+const Editor = React.createClass({
     handleChange() {
         if (this.props.onChange) {
             this.props.onChange( this.refs.input.getValue() );
@@ -19,14 +15,14 @@ let Editor = React.createClass({
     render() {
         return (
            <Input type="textarea"
-                value={this.props.value}
-                label={this.props.label}
-                ref="input"
-                wrapperClassName="Editor wrapper-class"
-                labelClassName="label-class"
-                onChange={this.handleChange} />
+                  value={this.props.value}
+                  label={this.props.label}
+                  ref="input"
+                  wrapperClassName="Editor wrapper-class"
+                  labelClassName="label-class"
+                  onChange={this.handleChange} />
         );
     }
 });
 
-module.exports = Editor;
+export default Editor;
