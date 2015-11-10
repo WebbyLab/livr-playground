@@ -40,7 +40,7 @@ const App = React.createClass({
                 result,
                 errors : validator.getErrors()
             };
-        } catch(e) {
+        } catch (e) {
             return { errors: e.message || e};
         }
     },
@@ -73,7 +73,7 @@ const App = React.createClass({
             let decoded = decodeURIComponent(window.location.hash);
             decoded = decoded.replace(/^#/, '');
             return jsonUtils.parse( decoded );
-        } catch(e) {
+        } catch (e) {
             console.error(e);
             return {
                 rules: '{}',

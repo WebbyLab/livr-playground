@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "autoprefixer-loader": "*",
-    "babel-loader": "*",
+    "babel-loader": "5.*",
     "css-loader": "*",
     "eslint": "^1.1.0",
     "eslint-loader": "^1.0.0",
