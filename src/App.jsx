@@ -10,13 +10,27 @@ import Output   from './components/Output.jsx';
 import HeadMenu from './components/HeadMenu.jsx';
 import Footer   from './components/Footer.jsx';
 
-import LIVR      from 'livr';
-import jsonUtils from './jsonUtils';
+import LIVR       from 'livr';
+import extraRules from 'livr-extra-rules';
+import jsonUtils  from './jsonUtils';
 
 import './App.less';
 import presets from './presets/';
 
 LIVR.Validator.defaultAutoTrim(true);
+LIVR.Validator.registerDefaultRules(extraRules);
+
+const assetsCache = {};
+function getAsset(url) {
+    if (assetsCache[url]) return assetsCache[url]; 
+    
+    return fetch(url)
+        .then( response => response.text() )
+        .then( text => {
+            assetsCache[url] = text;
+            return assetsCache[url];
+        });
+}
 
 const App = React.createClass({
     getInitialState() {
@@ -53,12 +67,13 @@ const App = React.createClass({
     },
 
     handlePresetSelect(preset) {
-        this.setState({
-            rules: preset.rules,
-            data: preset.data
+        Promise.all([
+            getAsset(preset.rules),
+            getAsset(preset.data)
+        ]).then(([rules, data]) => {
+            this.setState({ rules, data });
+            this.updateURL();
         });
-
-        this.updateURL();
     },
 
     updateURL() {

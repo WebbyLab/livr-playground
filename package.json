@@ -1,6 +1,6 @@
 {
   "name": "LIVR-Playground",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "LIVR Playground",
   "author": {
     "name": "WebbyLab",
@@ -10,31 +10,17 @@
   "private": true,
   "scripts": {
     "lint": "eslint src",
-    "build": "webpack -p",
-    "devserver": "webpack-dev-server --debug --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090",
+    "build": "rm -rf dist && parcel build --public-url '.' public/index.html",
     "test": "npm run lint"
   },
   "dependencies": {
-    "livr": "2.0.0",
+    "livr": "2.2.2",
+    "livr-extra-rules": "^1.2.0",
     "react": "^0.13.3",
     "react-bootstrap": "^0.24.4",
     "relaxed-json": "^0.2.8"
   },
   "devDependencies": {
-    "autoprefixer-loader": "*",
-    "babel-loader": "5.*",
-    "css-loader": "*",
-    "eslint": "^1.1.0",
-    "eslint-loader": "^1.0.0",
-    "eslint-plugin-react": "^3.2.1",
-    "file-loader": "^0.8.4",
-    "json-loader": "*",
-    "less-loader": "*",
-    "raw-loader": "^0.5.1",
-    "react-hot-loader": "*",
-    "style-loader": "*",
-    "url-loader": "*",
-    "webpack": "*",
-    "webpack-dev-server": "*"
+    "parcel-bundler": "^1.11.0"
   }
 }
