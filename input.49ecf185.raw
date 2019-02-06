@@ -1,0 +1,12 @@
+{
+    order_id: 10455,
+    products: [{
+        product_type: 'material',
+        material_id: 345,
+        quantity:  5,
+        warehouse_id: 24
+    },{
+        product_type: 'service',
+        name: 'Clean filter'
+    }]
+}
