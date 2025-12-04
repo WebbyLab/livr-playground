@@ -1,30 +1,26 @@
 'use strict';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 
 function HeadMenu(props) {
   const { presets = [], onPresetClick } = props;
 
-  function handlePresetClick(preset, event) {
-    event.preventDefault();
-    onPresetClick(preset);
-  }
-
-  function renderPresetsItems() {
+  const presetsItems = useMemo(function() {
     return presets.map(function(preset) {
       return (
         <NavDropdown.Item
           key={preset.id}
           onClick={function(event) {
-            handlePresetClick(preset.payload, event);
+            event.preventDefault();
+            onPresetClick(preset.payload);
           }}
         >
           {preset.id}
         </NavDropdown.Item>
       );
     });
-  }
+  }, [presets, onPresetClick]);
 
   return (
     <Navbar variant="dark" bg="dark" expand="lg" className="mb-4">
@@ -34,7 +30,7 @@ function HeadMenu(props) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <NavDropdown title="Examples" id="examples-dropdown">
-              {renderPresetsItems()}
+              {presetsItems}
             </NavDropdown>
             <Nav.Link href="http://livr-spec.org/" target="_blank" rel="noopener noreferrer">
               livr-spec.org
@@ -49,4 +45,4 @@ function HeadMenu(props) {
   );
 }
 
-export default HeadMenu;
+export default React.memo(HeadMenu);
