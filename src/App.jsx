@@ -87,6 +87,9 @@ const App = React.createClass({
         try {
             let decoded = decodeURIComponent(window.location.hash);
             decoded = decoded.replace(/^#/, '');
+            if (!decoded) {
+                return { rules: '{}', data: '{}' };
+            }
             return jsonUtils.parse( decoded );
         } catch (e) {
             console.error(e);

@@ -10,17 +10,21 @@
   "private": true,
   "scripts": {
     "lint": "eslint src",
-    "build": "rm -rf dist && parcel build --public-url '.' public/index.html",
+    "start": "parcel serve public/index.html",
+    "build": "rm -rf dist && parcel build public/index.html --public-url '.' --no-scope-hoist",
     "test": "npm run lint"
   },
   "dependencies": {
-    "livr": "2.2.2",
-    "livr-extra-rules": "^1.2.0",
+    "livr": "2.10.1",
+    "livr-extra-rules": "^1.6.0",
     "react": "^0.13.3",
     "react-bootstrap": "^0.24.4",
     "relaxed-json": "^0.2.8"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.11.0"
+    "@parcel/transformer-inline-string": "^2.16.1",
+    "@parcel/transformer-less": "^2.16.1",
+    "less": "^4.4.2",
+    "parcel": "^2.12.0"
   }
 }
