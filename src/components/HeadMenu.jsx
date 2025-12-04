@@ -2,6 +2,8 @@
 
 import React, { useMemo } from 'react';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import { version as livrVersion } from 'livr/package.json';
+import { version as livrExtraRulesVersion } from 'livr-extra-rules/package.json';
 
 function HeadMenu(props) {
   const { presets = [], onPresetClick } = props;
@@ -38,6 +40,11 @@ function HeadMenu(props) {
             <Nav.Link href="https://github.com/WebbyLab/livr-playground" target="_blank" rel="noopener noreferrer">
               github
             </Nav.Link>
+          </Nav>
+          <Nav className="ms-auto">
+            <Navbar.Text className="text-muted small">
+              LIVR {livrVersion} | Extra Rules {livrExtraRulesVersion}
+            </Navbar.Text>
           </Nav>
         </Navbar.Collapse>
       </Container>
