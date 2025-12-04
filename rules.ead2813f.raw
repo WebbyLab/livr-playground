@@ -1,8 +1,0 @@
-{
-    name: 'required',
-    phone: {max_length: 10},
-    address: {nested_object: {
-        city: 'required',
-        zip: ['required', 'positive_integer']
-    }}
-}

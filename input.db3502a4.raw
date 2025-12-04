@@ -1,8 +1,0 @@
-{
-    name: 'aaaa',
-    phone: '+823832',
-    address: {
-        city: 'Kyiv',
-        zip: 1232
-    }
-}

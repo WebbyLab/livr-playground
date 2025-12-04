@@ -1,0 +1,17 @@
+[
+  {
+    name: 'user_email',
+    rules: 'email',
+    error: 'INVALID_USER_EMAIL'
+  },
+  {
+    name: 'secure_password',
+    rules: [{min_length: 8}, {max_length: 64}],
+    error: 'PASSWORD_TOO_WEAK'
+  },
+  {
+    name: 'account_name',
+    rules: [{min_length: 3}, {max_length: 20}, {like: '^[a-zA-Z0-9_]+$'}],
+    error: 'INVALID_ACCOUNT_NAME'
+  }
+]

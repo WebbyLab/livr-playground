@@ -1,0 +1,10 @@
+{
+  sku: 'PRD-12345',
+  name: 'Wireless Bluetooth Headphones',
+  price: 79.99,
+  quantity: 150,
+  discount: {
+    amount: 59.99,
+    valid_until: '2025-12-31'
+  }
+}

@@ -1,0 +1,8 @@
+{
+  username: 'john_doe',
+  email: 'john@example.com',
+  password: 'SecurePass123',
+  password_confirm: 'SecurePass123',
+  age: 25,
+  terms_accepted: true
+}
