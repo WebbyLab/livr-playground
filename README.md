@@ -1,19 +1,31 @@
-LIVR Playground
----------------
+# LIVR Playground
 
-You can play with it here http://webbylab.github.io/livr-playground 
+Interactive web app for testing [LIVR](http://livr-spec.org) (Language Independent Validation Rules) validators.
 
-See http://livr-spec.org for spec details.
+**[Live Demo](http://webbylab.github.io/livr-playground)**
 
-## RUN DEVELOPMENT VERSION
+## Features
 
-1. npm install
-2. npm run devserver
-3. open http://localhost:8090 in browser
+- Write validation rules and test data side-by-side
+- Real-time validation feedback
+- Includes [livr-extra-rules](https://github.com/koorchik/js-livr-extra-rules) by default
+- Supports relaxed JSON input (trailing commas, unquoted keys)
+- Shareable URLs - state is persisted in the URL hash
 
+## Development
 
-## BUILD PRODUCTION VERSION
+```bash
+npm install
+npm start         # http://localhost:1234
+```
 
-1. npm install
-2. npm run build
-3. folder "public" contains production version. Just open public/index.html in browser.
+## Production Build
+
+```bash
+npm run build     # outputs to dist/
+```
+
+## Links
+
+- [LIVR Specification](http://livr-spec.org)
+- [LIVR npm package](https://www.npmjs.com/package/livr)

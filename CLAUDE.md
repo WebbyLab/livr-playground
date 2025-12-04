@@ -19,8 +19,8 @@ npm test             # Runs lint (alias for npm run lint)
 ## Architecture
 
 - **Build tool**: Parcel 2
-- **Framework**: React 0.13.x (uses legacy `React.createClass` API)
-- **UI**: react-bootstrap 0.24.x
+- **Framework**: React 18
+- **UI**: react-bootstrap 2.x
 - **Styling**: LESS files co-located with components
 
 ### Key Files
