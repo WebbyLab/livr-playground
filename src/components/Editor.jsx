@@ -15,11 +15,12 @@ function Editor(props) {
       <Form.Label className="fw-semibold">{props.label}</Form.Label>
       <Form.Control
         as="textarea"
-        rows={12}
+        rows={props.rows || 12}
         value={props.value}
         onChange={handleChange}
         className="font-monospace"
         style={{ resize: 'none' }}
+        placeholder={props.placeholder}
       />
     </Form.Group>
   );

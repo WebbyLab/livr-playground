@@ -2,6 +2,22 @@
 
 export default [
   {
+    id: 'Using Aliases: E-commerce',
+    payload: {
+      rules: require('url:./aliases-ecommerce/rules.raw'),
+      data: require('url:./aliases-ecommerce/input.raw'),
+      aliases: require('url:./aliases-ecommerce/aliases.raw')
+    }
+  },
+  {
+    id: 'Using Aliases: User Registration',
+    payload: {
+      rules: require('url:./aliases-registration/rules.raw'),
+      data: require('url:./aliases-registration/input.raw'),
+      aliases: require('url:./aliases-registration/aliases.raw')
+    }
+  },
+  {
     id: 'Registration form',
     payload: {
       rules: require('url:./registration-form/rules.raw'),

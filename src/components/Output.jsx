@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import { Alert } from 'react-bootstrap';
+import { Alert, Form } from 'react-bootstrap';
 import jsonUtils from '../jsonUtils';
 
 function Output(props) {
@@ -10,11 +10,14 @@ function Output(props) {
   const variant = isValid ? 'success' : 'danger';
 
   return (
-    <Alert variant={variant} className="mt-4">
-      <pre className="mb-0 font-monospace" style={{ whiteSpace: 'pre-wrap' }}>
-        {jsonUtils.stringify(isValid ? output.result : output.errors)}
-      </pre>
-    </Alert>
+    <Form.Group className="mb-3">
+      <Form.Label className="fw-semibold">{props.label || 'Result'}</Form.Label>
+      <Alert variant={variant} className="mb-0" style={{ height: '252px', overflowY: 'auto' }}>
+        <pre className="mb-0 font-monospace" style={{ whiteSpace: 'pre-wrap' }}>
+          {jsonUtils.stringify(isValid ? output.result : output.errors)}
+        </pre>
+      </Alert>
+    </Form.Group>
   );
 }
 
