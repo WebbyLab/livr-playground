@@ -1,24 +1,24 @@
 [
-    {
-        name: 'product_price',
-        rules: 'positive_decimal',
-        error: 'INVALID_PRODUCT_PRICE'
-    },
-    {
-        name: 'catalog_sku',
-        rules: {like: '^[A-Z]{2,4}-[0-9]{4,8}$'},
-        error: 'INVALID_CATALOG_SKU'
-    },
-    {
-        name: 'order_quantity',
-        rules: ['positive_integer', {max_number: 9999}],
-        error: 'QUANTITY_OUT_OF_RANGE'
-    },
-    {
-        name: 'discount_info',
-        rules: {nested_object: {
-            amount: ['required', 'product_price'],
-            valid_until: ['required', 'iso_date']
-        }}
-    }
+  {
+    name: 'product_price',
+    rules: 'positive_decimal',
+    error: 'INVALID_PRODUCT_PRICE'
+  },
+  {
+    name: 'catalog_sku',
+    rules: {like: '^[A-Z]{2,4}-[0-9]{4,8}$'},
+    error: 'INVALID_CATALOG_SKU'
+  },
+  {
+    name: 'order_quantity',
+    rules: ['positive_integer', {max_number: 9999}],
+    error: 'QUANTITY_OUT_OF_RANGE'
+  },
+  {
+    name: 'discount_info',
+    rules: {nested_object: {
+      amount: ['required', 'product_price'],
+      valid_until: ['required', 'iso_date']
+    }}
+  }
 ]

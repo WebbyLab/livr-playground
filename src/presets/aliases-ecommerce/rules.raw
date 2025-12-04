@@ -1,7 +1,7 @@
 {
-    sku: ['required', 'catalog_sku'],
-    name: ['required', {max_length: 100}],
-    price: ['required', 'product_price'],
-    quantity: ['required', 'order_quantity'],
-    discount: 'discount_info'
+  sku: ['required', 'catalog_sku'],
+  name: ['required', {max_length: 100}],
+  price: ['required', 'product_price'],
+  quantity: ['required', 'order_quantity'],
+  discount: 'discount_info'
 }
