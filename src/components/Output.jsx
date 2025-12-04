@@ -1,33 +1,21 @@
 'use strict';
 
-import React from 'react/addons';
-const cx    = React.addons.classSet;
-
-import Well  from 'react-bootstrap/lib/Well';
+import React from 'react';
+import { Alert } from 'react-bootstrap';
 import jsonUtils from '../jsonUtils';
 
-import './Output.less';
+function Output(props) {
+  const output = props.value;
+  const isValid = output.result && !output.errors;
+  const variant = isValid ? 'success' : 'danger';
 
-
-const Output = React.createClass({
-    render() {
-        const output = this.props.value;
-
-        const outputClasses = cx({
-            Output: true,
-            valid: output.result,
-            error: output.errors
-        });
-
-        return (
-            <Well className={outputClasses}>
-                <pre>
-                    { jsonUtils.stringify(output.result ? output.result : output.errors) }
-                </pre>
-            </Well>
-        );
-    }
-
-});
+  return (
+    <Alert variant={variant} className="mt-4">
+      <pre className="mb-0 font-monospace" style={{ whiteSpace: 'pre-wrap' }}>
+        {jsonUtils.stringify(isValid ? output.result : output.errors)}
+      </pre>
+    </Alert>
+  );
+}
 
 export default Output;

@@ -2,24 +2,14 @@
 
 import React from 'react';
 
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
-
-import './Footer.less';
-
-const Footer = React.createClass({
-    render() {
-        return (
-            <Row className='Footer'>
-                <Col xs={12}>
-                    <small>
-                        Developed by <a href='http://webbylab.com' target='_blank'> WebbyLab </a>
-                    </small>
-                </Col>
-            </Row>
-
-        );
-    }
-});
+function Footer() {
+  return (
+    <footer className="mt-4 pt-3 border-top text-end text-muted">
+      <small>
+        Developed by <a href="http://webbylab.com" target="_blank" rel="noopener noreferrer">WebbyLab</a>
+      </small>
+    </footer>
+  );
+}
 
 export default Footer;

@@ -15,15 +15,20 @@
     "test": "npm run lint"
   },
   "dependencies": {
+    "classnames": "^2.5.0",
     "livr": "2.10.1",
     "livr-extra-rules": "^1.6.0",
-    "react": "^0.13.3",
-    "react-bootstrap": "^0.24.4",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.10.0",
+    "react-dom": "^18.2.0",
     "relaxed-json": "^0.2.8"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.1",
     "@parcel/transformer-inline-string": "^2.16.1",
     "@parcel/transformer-less": "^2.16.1",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.5.0",
     "less": "^4.4.2",
     "parcel": "^2.12.0"
   }

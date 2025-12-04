@@ -1,58 +1,52 @@
 'use strict';
 
-import React          from 'react';
+import React from 'react';
+import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 
-import NavItem        from 'react-bootstrap/lib/NavItem';
-import Navbar         from 'react-bootstrap/lib/Navbar';
-import Nav            from 'react-bootstrap/lib/Nav';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
-import MenuItem       from 'react-bootstrap/lib/MenuItem';
+function HeadMenu(props) {
+  const { presets = [], onPresetClick } = props;
 
-import './HeadMenu.less';
+  function handlePresetClick(preset, event) {
+    event.preventDefault();
+    onPresetClick(preset);
+  }
 
-const HeadMenu = React.createClass({
-    getDefaultProps() {
-        return {
-            presets: []
-        };
-    },
+  function renderPresetsItems() {
+    return presets.map(function(preset) {
+      return (
+        <NavDropdown.Item
+          key={preset.id}
+          onClick={function(event) {
+            handlePresetClick(preset.payload, event);
+          }}
+        >
+          {preset.id}
+        </NavDropdown.Item>
+      );
+    });
+  }
 
-    handlePresetClick(preset, event) {
-        this.props.onPresetClick(preset);
-        event.preventDefault();
-    },
-
-    renderPresetsItems() {
-        return this.props.presets.map( preset =>
-            <MenuItem key={preset.id} onClick={this.handlePresetClick.bind(this, preset.payload)}>
-                {preset.id}
-            </MenuItem>
-        );
-    },
-
-    render() {
-        return (
-            <Navbar className='HeadMenu'>
-                <Nav>
-                    <NavItem key={1} className='sitename'>
-                        LIVR PLAYGROUND
-                    </NavItem>
-
-                    <DropdownButton key={4} title="Examples">
-                        {this.renderPresetsItems()}
-                    </DropdownButton>
-
-                    <NavItem key={2} href="http://livr-spec.org/" target="_blank">
-                        livr-spec.org
-                    </NavItem>
-
-                    <NavItem key={5} href="https://github.com/WebbyLab/livr-playground" target="_blank">
-                        github
-                    </NavItem>
-                </Nav>
-            </Navbar>
-        );
-    }
-});
+  return (
+    <Navbar variant="dark" bg="dark" expand="lg" className="mb-4">
+      <Container fluid>
+        <Navbar.Brand className="text-success fw-bold">LIVR PLAYGROUND</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <NavDropdown title="Examples" id="examples-dropdown">
+              {renderPresetsItems()}
+            </NavDropdown>
+            <Nav.Link href="http://livr-spec.org/" target="_blank" rel="noopener noreferrer">
+              livr-spec.org
+            </Nav.Link>
+            <Nav.Link href="https://github.com/WebbyLab/livr-playground" target="_blank" rel="noopener noreferrer">
+              github
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+}
 
 export default HeadMenu;

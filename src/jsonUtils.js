@@ -2,6 +2,10 @@
 import 'relaxed-json';
 
 export default {
-    parse: json => JSON.parse( window.RJSON.transform(json) ),
-    stringify: data => JSON.stringify(data, null, '    ')
+  parse(json) {
+    return JSON.parse(window.RJSON.transform(json));
+  },
+  stringify(data) {
+    return JSON.stringify(data, null, '    ');
+  }
 };

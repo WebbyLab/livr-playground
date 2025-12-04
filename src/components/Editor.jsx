@@ -1,28 +1,28 @@
 'use strict';
 
 import React from 'react';
-import Input from 'react-bootstrap/lib/Input';
+import { Form } from 'react-bootstrap';
 
-import './Editor.less';
-
-const Editor = React.createClass({
-    handleChange() {
-        if (this.props.onChange) {
-            this.props.onChange( this.refs.input.getValue() );
-        }
-    },
-
-    render() {
-        return (
-           <Input type="textarea"
-                  value={this.props.value}
-                  label={this.props.label}
-                  ref="input"
-                  wrapperClassName="Editor wrapper-class"
-                  labelClassName="label-class"
-                  onChange={this.handleChange} />
-        );
+function Editor(props) {
+  function handleChange(event) {
+    if (props.onChange) {
+      props.onChange(event.target.value);
     }
-});
+  }
+
+  return (
+    <Form.Group className="mb-3">
+      <Form.Label className="fw-semibold">{props.label}</Form.Label>
+      <Form.Control
+        as="textarea"
+        rows={12}
+        value={props.value}
+        onChange={handleChange}
+        className="font-monospace"
+        style={{ resize: 'none' }}
+      />
+    </Form.Group>
+  );
+}
 
 export default Editor;
