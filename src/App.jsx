@@ -1,180 +1,142 @@
 'use strict';
 
-import React, { useState, useCallback, useMemo } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
+import React, { useState, useMemo, useEffect } from 'react';
 
-import Editor from './components/Editor.jsx';
-import Output from './components/Output.jsx';
-import HeadMenu from './components/HeadMenu.jsx';
+import CodeEditor from './components/CodeEditor.jsx';
+import Header from './components/Header.jsx';
+import Result from './components/Result.jsx';
 import Footer from './components/Footer.jsx';
-
-import LIVR from 'livr';
-import allExtraRules from 'livr-extra-rules';
 import jsonUtils from './jsonUtils';
-
+import { validate } from './validate';
 import presets from './presets/';
 
-LIVR.Validator.defaultAutoTrim(true);
-// livr 2.13 implements LIVR 2.5, which has some of the extra rules built in (uuid, boolean,
-// iso_date, ...). Register only the extra rules that LIVR does not define, so the built-in rules
-// are not replaced. instance_of and has_methods need JavaScript objects, which JSON input can't contain.
-const builtInRules = LIVR.Validator.getDefaultRules();
-const jsOnlyRules = ['instance_of', 'has_methods'];
-const extraRules = Object.fromEntries(
-  Object.entries(allExtraRules).filter(([name]) => !(name in builtInRules) && !jsOnlyRules.includes(name))
-);
-LIVR.Validator.registerDefaultRules(extraRules);
+const EMPTY_STATE = { rules: '{}', data: '{}', aliases: '[]' };
 
 const assetsCache = {};
 function getAsset(url) {
-  if (assetsCache[url]) return assetsCache[url];
-
-  return fetch(url)
-    .then(function(response) {
-      return response.text();
-    })
-    .then(function(text) {
-      assetsCache[url] = text;
-      return assetsCache[url];
-    });
+  if (!assetsCache[url]) {
+    assetsCache[url] = fetch(url).then(response => response.text());
+  }
+  return assetsCache[url];
 }
 
+// The state lives in the URL hash, so a link restores the playground
 function parseURL() {
   try {
-    let decoded = decodeURIComponent(window.location.hash);
-    decoded = decoded.replace(/^#/, '');
-    if (!decoded) {
-      return { rules: '{}', data: '{}', aliases: '[]' };
-    }
+    const decoded = decodeURIComponent(window.location.hash).replace(/^#/, '');
+    if (!decoded) return EMPTY_STATE;
     const parsed = jsonUtils.parse(decoded);
     return {
-      rules: parsed.rules || '{}',
-      data: parsed.data || '{}',
-      aliases: parsed.aliases || '[]'
+      rules: parsed.rules || EMPTY_STATE.rules,
+      data: parsed.data || EMPTY_STATE.data,
+      aliases: parsed.aliases || EMPTY_STATE.aliases
     };
   } catch (e) {
     console.error(e);
-    return {
-      rules: '{}',
-      data: '{}',
-      aliases: '[]'
-    };
+    return EMPTY_STATE;
+  }
+}
+
+function writeURL(state) {
+  const saved = { rules: state.rules, data: state.data };
+  if (state.aliases.trim() && state.aliases.trim() !== '[]') saved.aliases = state.aliases;
+  window.history.replaceState(null, '', '#' + encodeURIComponent(JSON.stringify(saved)));
+}
+
+function countAliases(text) {
+  try {
+    const aliases = jsonUtils.parse(text);
+    return Array.isArray(aliases) ? aliases.length : 0;
+  } catch {
+    return 0;
   }
 }
 
 function App() {
-  const initialState = parseURL();
-  const [rules, setRules] = useState(initialState.rules);
-  const [data, setData] = useState(initialState.data);
-  const [aliases, setAliases] = useState(initialState.aliases);
+  const [state, setState] = useState(parseURL);
+  const [presetId, setPresetId] = useState('');
+  const [tab, setTab] = useState('rules');
 
-  const updateURL = useCallback(function(newRules, newData, newAliases) {
-    const state = { rules: newRules, data: newData };
-    if (newAliases && newAliases !== '[]') {
-      state.aliases = newAliases;
+  useEffect(function() {
+    writeURL(state);
+  }, [state]);
+
+  // A link pasted into the address bar of an open playground
+  useEffect(function() {
+    function handleHashChange() {
+      setState(parseURL());
+      setPresetId('');
     }
-    window.location.hash = encodeURIComponent(JSON.stringify(state));
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const handleAliasesChange = useCallback(function(text) {
-    setAliases(text);
-    updateURL(rules, data, text);
-  }, [rules, data, updateURL]);
+  const result = useMemo(function() {
+    return validate(state.rules, state.data, state.aliases);
+  }, [state]);
 
-  const handleRulesChange = useCallback(function(text) {
-    setRules(text);
-    updateURL(text, data, aliases);
-  }, [data, aliases, updateURL]);
+  function update(field) {
+    return function(text) {
+      setState(previous => ({ ...previous, [field]: text }));
+    };
+  }
 
-  const handleDataChange = useCallback(function(text) {
-    setData(text);
-    updateURL(rules, text, aliases);
-  }, [rules, aliases, updateURL]);
-
-  const handlePresetSelect = useCallback(function(preset) {
-    const aliasesPromise = preset.aliases
-      ? getAsset(preset.aliases)
-      : Promise.resolve('[]');
-
+  function handlePresetSelect(preset) {
+    setPresetId(preset.id);
     Promise.all([
       getAsset(preset.rules),
       getAsset(preset.data),
-      aliasesPromise
-    ]).then(function([newRules, newData, newAliases]) {
-      setRules(newRules);
-      setData(newData);
-      setAliases(newAliases);
-      updateURL(newRules, newData, newAliases);
+      preset.aliases ? getAsset(preset.aliases) : Promise.resolve('[]')
+    ]).then(function([rules, data, aliases]) {
+      setState({ rules, data, aliases });
+      setTab('rules');
     });
-  }, [updateURL]);
+  }
 
-  const validationResult = useMemo(function() {
-    try {
-      const parsedAliases = jsonUtils.parse(aliases);
-      const parsedRules = jsonUtils.parse(rules);
-      const parsedData = jsonUtils.parse(data);
-
-      const validator = new LIVR.Validator(parsedRules);
-
-      if (Array.isArray(parsedAliases) && parsedAliases.length > 0) {
-        parsedAliases.forEach(function(alias) {
-          validator.registerAliasedRule(alias);
-        });
-      }
-
-      const result = validator.validate(parsedData);
-
-      return {
-        result,
-        errors: validator.getErrors()
-      };
-    } catch (e) {
-      return { errors: e.message || e };
-    }
-  }, [aliases, rules, data]);
+  const aliasCount = countAliases(state.aliases);
+  const errorIn = result.status === 'error' ? result.source : null;
+  const errorLine = result.status === 'error' ? result.line : null;
 
   return (
-    <Container className="py-3">
-      <HeadMenu presets={presets} onPresetClick={handlePresetSelect} />
+    <div className="app">
+      <Header presets={presets} presetId={presetId} onPresetSelect={handlePresetSelect} />
 
-      <Row className="g-3 mb-3">
-        <Col xs={12} md={6}>
-          <Editor
-            label="LIVR Rules"
-            value={rules}
-            onChange={handleRulesChange}
-            rows={8}
-          />
-        </Col>
+      <main className="workspace">
+        <section className="pane pane-rules" aria-label="Rules and aliases">
+          <div className="pane-head tabs" role="tablist">
+            <button type="button" role="tab" aria-selected={tab === 'rules'}
+              className={'tab' + (errorIn === 'rules' ? ' tab--error' : '')} onClick={() => setTab('rules')}>
+              Rules
+            </button>
+            <button type="button" role="tab" aria-selected={tab === 'aliases'}
+              className={'tab' + (errorIn === 'aliases' ? ' tab--error' : '')} onClick={() => setTab('aliases')}>
+              Aliases{aliasCount ? <span className="tab-count">{aliasCount}</span> : null}
+            </button>
+          </div>
+          <div className="pane-body" role="tabpanel">
+            {tab === 'rules'
+              ? <CodeEditor key="rules" label="Rules" value={state.rules} onChange={update('rules')}
+                errorLine={errorIn === 'rules' ? errorLine : null} />
+              : <CodeEditor key="aliases" label="Aliases" value={state.aliases} onChange={update('aliases')}
+                errorLine={errorIn === 'aliases' ? errorLine : null} />}
+          </div>
+        </section>
 
-        <Col xs={12} md={6}>
-          <Editor
-            label="Aliases (optional)"
-            value={aliases}
-            onChange={handleAliasesChange}
-            rows={8}
-            placeholder="[]"
-          />
-        </Col>
-      </Row>
+        <section className="pane pane-data" aria-label="Data">
+          <div className={'pane-head' + (errorIn === 'data' ? ' pane-head--error' : '')}>
+            <span className="pane-title">Data</span>
+          </div>
+          <div className="pane-body">
+            <CodeEditor label="Data" value={state.data} onChange={update('data')}
+              errorLine={errorIn === 'data' ? errorLine : null} />
+          </div>
+        </section>
 
-      <Row className="g-3 mb-4">
-        <Col xs={12} md={6}>
-          <Editor
-            label="Data for validation"
-            value={data}
-            onChange={handleDataChange}
-            rows={10}
-          />
-        </Col>
-
-        <Col xs={12} md={6}>
-          <Output label="Result" value={validationResult} />
-        </Col>
-      </Row>
+        <Result result={result} />
+      </main>
 
       <Footer />
-    </Container>
+    </div>
   );
 }
 

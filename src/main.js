@@ -1,10 +1,8 @@
 'use strict';
-import './assets';
+import './styles.less';
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
 
-const container = document.getElementById('content');
-const root = createRoot(container);
-root.render(<App />);
+createRoot(document.getElementById('content')).render(<App />);

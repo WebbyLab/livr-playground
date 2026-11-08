@@ -1,13 +1,22 @@
 'use strict';
 
 import React from 'react';
+import { version as extraRulesVersion } from 'livr-extra-rules/package.json';
+import { extraRuleNames } from '../validate';
 
 function Footer() {
   return (
-    <footer className="mt-4 pt-3 border-top text-end text-muted">
-      <small>
-        Developed by <a href="http://webbylab.com" target="_blank" rel="noopener noreferrer">WebbyLab</a>
-      </small>
+    <footer className="footer">
+      <p>
+        Validation runs in your browser with every rule of LIVR 2.0 and 2.5, plus{' '}
+        <a href="https://github.com/koorchik/js-livr-extra-rules">livr-extra-rules</a> {extraRulesVersion}:{' '}
+        {extraRuleNames.map((name, index) => (
+          <React.Fragment key={name}>{index ? ', ' : ''}<code>{name}</code></React.Fragment>
+        ))}. Keys may be unquoted, strings single-quoted. The link always holds what you typed.
+      </p>
+      <p>
+        Made by <a href="https://webbylab.com">WebbyLab</a>
+      </p>
     </footer>
   );
 }

@@ -1,0 +1,8 @@
+{
+  ids: [{split: ','}, {list_length: [1, 20]}, 'unique', {list_of: {uuid: 'v7'}}],
+  status: {split: ','},
+  min_price: ['decimal', {max_decimals: 2}],
+  created_from: 'iso_datetime',
+  client_ip: 'ip',
+  labels: [{keys: {like: '^[a-z_]+$'}}, {values: ['string', {max_length: 30}]}]
+}

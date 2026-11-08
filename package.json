@@ -1,6 +1,6 @@
 {
   "name": "LIVR-Playground",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "LIVR Playground",
   "author": {
     "name": "WebbyLab",
@@ -11,15 +11,21 @@
   "scripts": {
     "lint": "eslint src",
     "start": "parcel serve public/index.html",
-    "build": "rm -rf dist && parcel build public/index.html --public-url '.' --no-scope-hoist",
+    "build": "rm -rf dist && parcel build public/index.html --public-url '.'",
     "test": "npm run lint"
   },
   "dependencies": {
-    "classnames": "^2.5.1",
+    "@codemirror/autocomplete": "^6.20.4",
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
+    "@lezer/highlight": "^1.2.5",
+    "codemirror": "^6.0.2",
     "livr": "2.13.1",
     "livr-extra-rules": "^1.7.0",
     "react": "^19.3.1",
-    "react-bootstrap": "^2.10.10",
     "react-dom": "^19.3.1",
     "relaxed-json": "^1.0.3"
   },

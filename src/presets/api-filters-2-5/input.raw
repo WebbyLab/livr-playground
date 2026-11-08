@@ -1,0 +1,8 @@
+{
+  ids: '019a5f6e-7c1d-7b3e-9f20-1a2b3c4d5e6f,019a5f6e-7c1d-7b3e-9f20-1a2b3c4d5e70',
+  status: 'paid,shipped',
+  min_price: '10.50',
+  created_from: '2026-11-01T00:00:00+02:00',
+  client_ip: '2001:db8::1',
+  labels: {team: 'billing', region: 'eu-west'}
+}
