@@ -19,7 +19,7 @@ npm test             # Runs lint (alias for npm run lint)
 ## Architecture
 
 - **Build tool**: Parcel 2
-- **Framework**: React 18
+- **Framework**: React 19
 - **UI**: react-bootstrap 2.x
 - **Styling**: LESS files co-located with components
 
@@ -32,8 +32,8 @@ npm test             # Runs lint (alias for npm run lint)
 
 ### Core Dependencies
 
-- `livr` - The validation library being demonstrated
-- `livr-extra-rules` - Additional LIVR validation rules (registered as defaults in App.jsx)
+- `livr` - The validation library being demonstrated (2.13+, implements LIVR 2.0 and LIVR 2.5)
+- `livr-extra-rules` - Additional LIVR validation rules. App.jsx registers only the ones LIVR doesn't define, so they don't replace built-in LIVR 2.5 rules with the same name (`uuid`, `iso_date`, ...); `instance_of` and `has_methods` are skipped because JSON input can't contain JavaScript objects
 - `relaxed-json` - Allows users to input non-strict JSON (trailing commas, unquoted keys)
 
 ### State Management

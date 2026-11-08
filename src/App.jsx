@@ -9,12 +9,20 @@ import HeadMenu from './components/HeadMenu.jsx';
 import Footer from './components/Footer.jsx';
 
 import LIVR from 'livr';
-import extraRules from 'livr-extra-rules';
+import allExtraRules from 'livr-extra-rules';
 import jsonUtils from './jsonUtils';
 
 import presets from './presets/';
 
 LIVR.Validator.defaultAutoTrim(true);
+// livr 2.13 implements LIVR 2.5, which has some of the extra rules built in (uuid, boolean,
+// iso_date, ...). Register only the extra rules that LIVR does not define, so the built-in rules
+// are not replaced. instance_of and has_methods need JavaScript objects, which JSON input can't contain.
+const builtInRules = LIVR.Validator.getDefaultRules();
+const jsOnlyRules = ['instance_of', 'has_methods'];
+const extraRules = Object.fromEntries(
+  Object.entries(allExtraRules).filter(([name]) => !(name in builtInRules) && !jsOnlyRules.includes(name))
+);
 LIVR.Validator.registerDefaultRules(extraRules);
 
 const assetsCache = {};
