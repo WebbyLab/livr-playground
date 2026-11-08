@@ -1,0 +1,13 @@
+{
+  order_id: '0b9f4c2e-6a1d-4f3b-9e2a-7c5d8e1f2a3b',
+  delivery_date: '2099-05-17',
+  payment_method: 'bank',
+  payment: {iban: 'DE89370400440532013000'},
+  company: 'Acme GmbH',
+  vat_number: 'DE123456789',
+  items: [
+    {sku: 'SKU-1001', quantity: 2},
+    {sku: 'SKU-2002', quantity: 1}
+  ],
+  newsletter: 'true'
+}

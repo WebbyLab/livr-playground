@@ -1,0 +1,16 @@
+{
+  order_id: ['required', {uuid: 'v4'}],
+  delivery_date: ['required', {iso_date: {min: 'tomorrow'}}],
+  payment_method: ['required', {one_of: ['card', 'bank']}],
+  payment: ['required', {when: ['payment_method', {
+    card: {nested_object: {number: ['required', 'credit_card']}},
+    bank: {nested_object: {iban: ['required', 'iban']}}
+  }]}],
+  company: 'string',
+  vat_number: {when: ['company', 'not_empty', 'required']},
+  items: ['required', {list_length: {min: 1}}, {unique: 'sku'}, {list_of_objects: {
+    sku: ['required', {starts_with: 'SKU-'}],
+    quantity: ['required', 'positive_integer']
+  }}],
+  newsletter: 'boolean'
+}
