@@ -4,9 +4,9 @@ import React, { useEffect, useRef } from 'react';
 import { EditorView, keymap, lineNumbers, highlightActiveLine, Decoration, drawSelection } from '@codemirror/view';
 import { EditorState, StateEffect, StateField } from '@codemirror/state';
 import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
-import { bracketMatching, indentOnInput, syntaxHighlighting, HighlightStyle } from '@codemirror/language';
+import { bracketMatching, indentOnInput, indentUnit, syntaxHighlighting, HighlightStyle } from '@codemirror/language';
 import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
-import { javascript } from '@codemirror/lang-javascript';
+import { json5Language } from '../json5Language';
 import { tags } from '@lezer/highlight';
 
 // Colors come from CSS variables, so the editor follows the light and dark themes
@@ -52,7 +52,7 @@ function CodeEditor(props) {
     const extensions = [
       EditorView.lineWrapping,
       EditorView.contentAttributes.of({ 'aria-label': label }),
-      javascript(),
+      json5Language,
       syntaxHighlighting(highlightStyle),
       errorLineField
     ];
@@ -69,6 +69,7 @@ function CodeEditor(props) {
         closeBrackets(),
         highlightActiveLine(),
         EditorState.tabSize.of(2),
+        indentUnit.of('  '),
         keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...historyKeymap, indentWithTab]),
         EditorView.updateListener.of(function(update) {
           if (update.docChanged && onChangeRef.current) {
